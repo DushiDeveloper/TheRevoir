@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE REVOIR | Official Site</title>
+    
+    <link rel="icon" type="image/png" href="asset-frieg-logo.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Pirata+One&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #a855f7; /* Their Purple */
+            --primary-glow: #a855f7aa;
+            --dark: #030303;
+            --light: #f3f4f6;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- TEXTURE OVERLAY --- */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        h1, h2, h3 {
+            font-family: 'Pirata One', cursive;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s ease;
+        }
+
+        /* --- UTIL CLASSES --- */
+        /* Inverts black logos to white */
+        .white-logo {
+            filter: invert(1);
+            display: block;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(to bottom, #000000dd, transparent);
+        }
+
+        .nav-logo {
+            height: 40px; /* Adjust as needed */
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: radial-gradient(circle at center, #1a0b2e 0%, #000000 100%);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: var(--primary);
+            filter: blur(150px);
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: moveBlob 10s infinite alternate;
+        }
+
+        @keyframes moveBlob {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            100% { transform: translate(-20%, -20%) scale(1.1); }
+        }
+
+        .hero-content {
+            z-index: 10;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-logo {
+            width: clamp(300px, 60vw, 800px);
+            height: auto;
+            margin-bottom: 2rem;
+            animation: fadeIn 2s ease-out;
+            /* Optional: Add a subtle glow to the main logo */
+            filter: invert(1) drop-shadow(0 0 20px var(--primary-glow));
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--primary);
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            padding: 1rem 3rem;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--light);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            box-shadow: 0 0 30px var(--primary-glow);
+        }
+
+        /* --- MUSIC SECTION --- */
+        .section {
+            padding: 8rem 5%;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 4rem;
+            margin-bottom: 4rem;
+            text-align: center;
+            color: var(--light);
+        }
+
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .album-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.4s ease;
+            position: relative;
+        }
+
+        .album-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+
+        .album-art {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background-color: #222;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .album-art img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .album-card:hover .album-art img {
+            transform: scale(1.1);
+        }
+
+        .album-info h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .album-info p {
+            color: #888;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .listen-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* --- BAND MEMBERS SECTION --- */
+        .members-section {
+            text-align: center;
+            padding-bottom: 10rem;
+        }
+
+        .member-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .member-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 250px;
+        }
+
+        .member-media {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background-color: #111;
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .member-video {
+            filter: grayscale(100%);
+        }
+
+        .member-media img,
+        .member-media video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Initially hide the video, show the image */
+        .member-media video {
+            opacity: 0;
+            z-index: 1;
+        }
+        .member-media img {
+            opacity: 1;
+            z-index: 2;
+        }
+        
+        /* Javascript will handle flipping the opacities on hover */
+        .member-item.is-hovering .member-media video { opacity: 1; }
+        .member-item.is-hovering .member-media img { opacity: 0; }
+
+
+        .member-name {
+            font-family: 'Pirata One', cursive;
+            font-size: 1.8rem;
+            color: var(--light);
+            margin-bottom: 0.5rem;
+        }
+        
+        .member-role {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #000;
+        }
+
+        .socials {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .socials a {
+            font-size: 1.5rem;
+        }
+
+        .socials a:hover {
+            color: var(--primary);
+            transform: scale(1.2);
+        }
+
+        /* --- MOBILE TWEAKS --- */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-logo { width: 80vw; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise"></div>
+
+    <nav>
+        <img src="asset-wordmark-logo.svg" alt="The Revoir Logo" class="nav-logo white-logo">
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#music">Music</a>
+            <a href="#about">About</a>
+            <a href="mailto:therevoirband@gmail">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="blob"></div>
+        <div class="hero-content">
+            <img src="asset-wordmark-logo.svg" alt="The Revoir" class="hero-logo">
+            <p class="hero-subtitle">Alt Rock / Aruba / Est. 2018</p>
+            <a href="#music" class="btn">Stream Latest</a>
+        </div>
+    </section>
+
+    <section id="music" class="section">
+        <h2 class="section-title">Latest Releases</h2>
+        <div class="music-grid">
+            <div class="album-card">
+                <div class="album-art">
+                    <img src="https://therevoir.neocities.org/img/showme512.jpg" alt="Show Me Art">
+                </div>
+                <div class="album-info">
+                    <h3>Show Me</h3>
+                    <p>Single • Jan 7, 2026</p>
+                    <a href="https://open.spotify.com/album/5bDR7RtOEy6aNCQBdpLQ2L" class="listen-link"><i class="fa-brands fa-spotify"></i> Listen Now</a>
+                </div>
+            </div>
+            <div class="album-card">
+                <div class="album-art">
+                    <img src="https://therevoir.neocities.org/img/stomp512.jpg" alt="Stomp Art">
+                </div>
+                <div class="album-info">
+                    <h3>Stomp</h3>
+                    <p>Album • Aug 25, 2023</p>
+                    <a href="https://open.spotify.com/album/0oenaMPhJVKx4R2G6KOF6w" class="listen-link"><i class="fa-brands fa-spotify"></i> Listen Now</a>
+                </div>
+            </div>
+            <div class="album-card">
+                <div class="album-art">
+                    <img src="https://therevoir.neocities.org/img/wh512.jpg" alt="What Happens Art">
+                </div>
+                <div class="album-info">
+                    <h3>What Happens</h3>
+                    <p>Single • Aug 24, 2023</p>
+                    <a href="https://open.spotify.com/album/0XQmN56rHNdBSoa1oEl2hB" class="listen-link"><i class="fa-brands fa-spotify"></i> Listen Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section members-section">
+        <h2 class="section-title" style="opacity: 0.7;">The Band</h2>
+        <div class="member-list">
+            
+            <div class="member-item">
+                <div class="member-media">
+                    <img src="/YN.png" alt="Yurick Neuman Mugshot" class="member-img">
+                    <video src="/1.MP4" loop muted preload="none" class="member-video"></video>
+                </div>
+                <span class="member-name">Yurick Neuman</span>
+                <span class="member-role">Vocals / Guitar</span>
+            </div>
+
+            <div class="member-item">
+                <div class="member-media">
+                    <img src="/SF.png" alt="Stephan Flores Mugshot" class="member-img">
+                    <video src="/2.MP4" loop muted preload="none" class="member-video"></video>
+                </div>
+                <span class="member-name">Stephan Flores</span>
+                <span class="member-role">Guitar / Vocals</span>
+            </div>
+
+            <div class="member-item">
+                <div class="member-media">
+                    <img src="/SB.png" alt="Shae Brokke Mugshot" class="member-img">
+                    <video src="/3.MP4" loop muted preload="none" class="member-video"></video>
+                </div>
+                <span class="member-name">Shae Brokke</span>
+                <span class="member-role">Bass / Vocals</span>
+            </div>
+
+            <div class="member-item">
+                <div class="member-media">
+                    <img src="/MC.png" alt="Madee Compagne Mugshot" class="member-img">
+                    <video src="/4.mov" loop muted preload="none" class="member-video"></video>
+                </div>
+                <span class="member-name">Madee Compagne</span>
+                <span class="member-role">Drums</span>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <div style="font-size: 0.8rem; color: #555;">
+            &copy; 2026 The Revoir. All rights reserved. <br>
+            Designed by <span style="color: var(--primary);">dushi.dev</span>
+        </div>
+        <div class="socials">
+            <a href="https://www.instagram.com/therevoirofficial"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@therevoir"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="mailto:therevoirband@gmail"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const memberItems = document.querySelectorAll('.member-item');
+
+            memberItems.forEach(item => {
+                const video = item.querySelector('.member-video');
+                
+                item.addEventListener('mouseenter', () => {
+                    item.classList.add('is-hovering');
+                    // Small delay to ensure smooth transition before playing
+                    setTimeout(() => {
+                        video.play();
+                    }, 100);
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    item.classList.remove('is-hovering');
+                    video.pause();
+                    video.currentTime = 0; // Optional: rewind to start
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
