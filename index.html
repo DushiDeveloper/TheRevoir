@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE REVOIR | Official Site</title>
-    
+
     <link rel="icon" type="image/png" href="asset-frieg-logo.svg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Pirata+One&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Pirata+One&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --primary: #a855f7; /* Their Purple */
+            --primary: #a855f7;
             --primary-glow: #a855f7aa;
             --dark: #030303;
             --light: #f3f4f6;
@@ -37,6 +39,12 @@
             line-height: 1.6;
         }
 
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+            /* Prevents the fixed header from covering the title */
+        }
+
         /* --- TEXTURE OVERLAY --- */
         .noise {
             position: fixed;
@@ -50,7 +58,9 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        h1, h2, h3 {
+        h1,
+        h2,
+        h3 {
             font-family: 'Pirata One', cursive;
             font-weight: 400;
             letter-spacing: 2px;
@@ -62,8 +72,6 @@
             transition: 0.3s ease;
         }
 
-        /* --- UTIL CLASSES --- */
-        /* Inverts black logos to white */
         .white-logo {
             filter: invert(1);
             display: block;
@@ -78,15 +86,26 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 100;
-            background: linear-gradient(to bottom, #000000dd, transparent);
+            z-index: 1000;
+            background: transparent;
+            transition: background 0.4s ease, padding 0.4s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            border-bottom: 1px solid var(--border);
         }
 
         .nav-logo {
-            height: 40px; /* Adjust as needed */
+            height: 40px;
             width: auto;
+            opacity: 1;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
+        /* Desktop Nav Links */
         .nav-links {
             display: flex;
             gap: 2rem;
@@ -105,9 +124,40 @@
             text-shadow: 0 0 10px var(--primary);
         }
 
+        /* --- HAMBURGER MENU (Hidden on Desktop) --- */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            /* Transition for the drop-down effect */
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .bar {
+            width: 30px;
+            height: 2px;
+            background-color: var(--light);
+            transition: 0.4s;
+        }
+
+        /* Hamburger Animation Active State */
+        .hamburger.active .bar:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .bar:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
         /* --- HERO SECTION --- */
         .hero {
-            height: 100vh;
+            height: 100dvh;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -130,8 +180,13 @@
         }
 
         @keyframes moveBlob {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            100% { transform: translate(-20%, -20%) scale(1.1); }
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            100% {
+                transform: translate(-20%, -20%) scale(1.1);
+            }
         }
 
         .hero-content {
@@ -140,14 +195,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 0 1rem;
         }
 
         .hero-logo {
-            width: clamp(300px, 60vw, 800px);
+            width: clamp(280px, 60vw, 800px);
             height: auto;
             margin-bottom: 2rem;
             animation: fadeIn 2s ease-out;
-            /* Optional: Add a subtle glow to the main logo */
             filter: invert(1) drop-shadow(0 0 20px var(--primary-glow));
         }
 
@@ -157,6 +212,7 @@
             letter-spacing: 5px;
             color: var(--primary);
             margin-bottom: 3rem;
+            text-align: center;
         }
 
         .btn {
@@ -192,7 +248,7 @@
 
         .music-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 3rem;
             max-width: 1200px;
             margin: 0 auto;
@@ -275,6 +331,10 @@
             width: 250px;
         }
 
+        .member-video {
+            filter: grayscale(100%);
+        }
+
         .member-media {
             width: 100%;
             aspect-ratio: 1/1;
@@ -284,10 +344,6 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
-        }
-
-        .member-video {
-            filter: grayscale(100%);
         }
 
         .member-media img,
@@ -301,20 +357,33 @@
             transition: opacity 0.3s ease;
         }
 
-        /* Initially hide the video, show the image */
         .member-media video {
             opacity: 0;
             z-index: 1;
         }
+
         .member-media img {
             opacity: 1;
             z-index: 2;
         }
-        
-        /* Javascript will handle flipping the opacities on hover */
-        .member-item.is-hovering .member-media video { opacity: 1; }
-        .member-item.is-hovering .member-media img { opacity: 0; }
 
+        .member-item.playing .member-media video {
+            opacity: 1;
+        }
+
+        .member-item.playing .member-media img {
+            opacity: 0;
+        }
+
+        @media (hover: hover) {
+            .member-item:hover .member-media video {
+                opacity: 1;
+            }
+
+            .member-item:hover .member-media img {
+                opacity: 0;
+            }
+        }
 
         .member-name {
             font-family: 'Pirata One', cursive;
@@ -322,7 +391,7 @@
             color: var(--light);
             margin-bottom: 0.5rem;
         }
-        
+
         .member-role {
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
@@ -350,24 +419,106 @@
             font-size: 1.5rem;
         }
 
-        .socials a:hover {
-            color: var(--primary);
-            transform: scale(1.2);
-        }
-
-        /* --- MOBILE TWEAKS --- */
+        /* --- MOBILE OPTIMIZATIONS & HAMBURGER LOGIC --- */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero-logo { width: 80vw; }
+
+            nav {
+                justify-content: space-between;
+            }
+
+            /* --- DROP DOWN LOGIC (Logo + Hamburger) --- */
+
+            /* 1. Initial State: Hidden and Above Screen */
+            .nav-logo,
+            .hamburger {
+                opacity: 0;
+                transform: translateY(-200%);
+            }
+
+            /* 2. Scrolled State: Visible and Dropped Down */
+            nav.scrolled .nav-logo,
+            nav.scrolled .hamburger {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* --- Hamburger Styling --- */
+            .hamburger {
+                display: flex;
+            }
+
+            /* --- Menu Overlay --- */
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 100%;
+                background-color: var(--dark);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transform: translateX(100%);
+                transition: transform 0.4s ease-in-out;
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            .nav-links a {
+                font-size: 2rem;
+                font-family: 'Pirata One', cursive;
+            }
+
+            .hero-logo {
+                width: 90%;
+                max-width: 350px;
+            }
+
+            .hero-subtitle {
+                font-size: 0.9rem;
+                letter-spacing: 3px;
+            }
+
+            .section {
+                padding: 4rem 1.5rem;
+            }
+
+            .section-title {
+                font-size: 3rem;
+                margin-bottom: 3rem;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+                padding-bottom: 5rem;
+            }
+
+            .member-list {
+                gap: 4rem;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="noise"></div>
 
     <nav>
         <img src="asset-wordmark-logo.svg" alt="The Revoir Logo" class="nav-logo white-logo">
+
+        <div class="hamburger">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
         <div class="nav-links">
             <a href="#">Home</a>
             <a href="#music">Music</a>
@@ -395,7 +546,8 @@
                 <div class="album-info">
                     <h3>Show Me</h3>
                     <p>Single • Jan 7, 2026</p>
-                    <a href="https://open.spotify.com/album/5bDR7RtOEy6aNCQBdpLQ2L" class="listen-link"><i class="fa-brands fa-spotify"></i> Listen Now</a>
+                    <a href="https://open.spotify.com/album/5bDR7RtOEy6aNCQBdpLQ2L" class="listen-link"><i
+                            class="fa-brands fa-spotify"></i> Listen Now</a>
                 </div>
             </div>
             <div class="album-card">
@@ -405,7 +557,8 @@
                 <div class="album-info">
                     <h3>Stomp</h3>
                     <p>Album • Aug 25, 2023</p>
-                    <a href="https://open.spotify.com/album/0oenaMPhJVKx4R2G6KOF6w" class="listen-link"><i class="fa-brands fa-spotify"></i> Listen Now</a>
+                    <a href="https://open.spotify.com/album/0oenaMPhJVKx4R2G6KOF6w" class="listen-link"><i
+                            class="fa-brands fa-spotify"></i> Listen Now</a>
                 </div>
             </div>
             <div class="album-card">
@@ -415,7 +568,8 @@
                 <div class="album-info">
                     <h3>What Happens</h3>
                     <p>Single • Aug 24, 2023</p>
-                    <a href="https://open.spotify.com/album/0XQmN56rHNdBSoa1oEl2hB" class="listen-link"><i class="fa-brands fa-spotify"></i> Listen Now</a>
+                    <a href="https://open.spotify.com/album/0XQmN56rHNdBSoa1oEl2hB" class="listen-link"><i
+                            class="fa-brands fa-spotify"></i> Listen Now</a>
                 </div>
             </div>
         </div>
@@ -424,49 +578,44 @@
     <section id="about" class="section members-section">
         <h2 class="section-title" style="opacity: 0.7;">The Band</h2>
         <div class="member-list">
-            
             <div class="member-item">
                 <div class="member-media">
-                    <img src="YN.png" alt="Yurick Neuman Mugshot" class="member-img">
-                    <video src="1.MP4" loop muted preload="none" class="member-video"></video>
+                    <img src="YN.png" alt="Yurick Neuman" class="member-img">
+                    <video src="1.MP4" loop muted playsinline preload="none" class="member-video"></video>
                 </div>
                 <span class="member-name">Yurick Neuman</span>
                 <span class="member-role">Vocals / Guitar</span>
             </div>
-
             <div class="member-item">
                 <div class="member-media">
-                    <img src="SF.png" alt="Stephan Flores Mugshot" class="member-img">
-                    <video src="2.MP4" loop muted preload="none" class="member-video"></video>
+                    <img src="SF.png" alt="Stephan Flores" class="member-img">
+                    <video src="2.MP4" loop muted playsinline preload="none" class="member-video"></video>
                 </div>
                 <span class="member-name">Stephan Flores</span>
                 <span class="member-role">Guitar / Vocals</span>
             </div>
-
             <div class="member-item">
                 <div class="member-media">
-                    <img src="SB.png" alt="Shae Brokke Mugshot" class="member-img">
-                    <video src="3.MP4" loop muted preload="none" class="member-video"></video>
+                    <img src="SB.png" alt="Shae Brokke" class="member-img">
+                    <video src="3.MP4" loop muted playsinline preload="none" class="member-video"></video>
                 </div>
                 <span class="member-name">Shae Brokke</span>
                 <span class="member-role">Bass / Vocals</span>
             </div>
-
             <div class="member-item">
                 <div class="member-media">
-                    <img src="MC.png" alt="Madee Compagne Mugshot" class="member-img">
-                    <video src="4.mov" loop muted preload="none" class="member-video"></video>
+                    <img src="MC.png" alt="Madee Compagne" class="member-img">
+                    <video src="4.mov" loop muted playsinline preload="none" class="member-video"></video>
                 </div>
                 <span class="member-name">Madee Compagne</span>
                 <span class="member-role">Drums</span>
             </div>
-
         </div>
     </section>
 
     <footer>
         <div style="font-size: 0.8rem; color: #555;">
-            &copy; 2026 The Revoir. All rights reserved. <br>
+            © 2026 The Revoir. All rights reserved. <br>
             Designed by <span style="color: var(--primary);">dushi.dev</span>
         </div>
         <div class="socials">
@@ -478,27 +627,89 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const memberItems = document.querySelectorAll('.member-item');
 
-            memberItems.forEach(item => {
-                const video = item.querySelector('.member-video');
-                
-                item.addEventListener('mouseenter', () => {
-                    item.classList.add('is-hovering');
-                    // Small delay to ensure smooth transition before playing
-                    setTimeout(() => {
-                        video.play();
-                    }, 100);
-                });
+            // --- 1. HEADER DROP-DOWN & HAMBURGER LOGIC ---
+            const nav = document.querySelector('nav');
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const links = document.querySelectorAll('.nav-links a');
 
-                item.addEventListener('mouseleave', () => {
-                    item.classList.remove('is-hovering');
-                    video.pause();
-                    video.currentTime = 0; // Optional: rewind to start
+            // Scroll Logic
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+
+            // Toggle Mobile Menu
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Close Menu when link is clicked
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
                 });
             });
+
+            // --- 2. VIDEO SCROLL EFFECT ---
+            const memberItems = document.querySelectorAll('.member-item');
+            const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+            if (!isTouch) {
+                // Desktop Hover
+                memberItems.forEach(item => {
+                    const video = item.querySelector('.member-video');
+                    item.addEventListener('mouseenter', () => {
+                        item.classList.add('playing');
+                        video.play().catch(e => console.log("Video wait", e));
+                    });
+                    item.addEventListener('mouseleave', () => {
+                        item.classList.remove('playing');
+                        video.pause();
+                        video.currentTime = 0;
+                    });
+                });
+            } else {
+                // Mobile Scroll Trigger
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '-25% 0px -35% 0px',
+                    threshold: 0.5
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const item = entry.target;
+                        const video = item.querySelector('.member-video');
+
+                        if (entry.isIntersecting) {
+                            if (!item.classList.contains('playing')) {
+                                item.classList.add('playing');
+                                video.play().catch(e => console.log("Autoplay blocked", e));
+                            }
+                        } else {
+                            if (item.classList.contains('playing')) {
+                                item.classList.remove('playing');
+                                video.pause();
+                                video.currentTime = 0;
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                memberItems.forEach(item => {
+                    observer.observe(item);
+                });
+            }
         });
     </script>
 
 </body>
+
 </html>
